@@ -1,0 +1,61 @@
+
+skin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+popup
+  rotate: false
+  xy: 1, 53
+  size: 382, 199
+  orig: 382, 199
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 1, 1
+  size: 127, 50
+  orig: 127, 50
+  offset: 0, 0
+  index: -1
+cup_silver
+  rotate: false
+  xy: 385, 171
+  size: 76, 81
+  orig: 76, 81
+  offset: 0, 0
+  index: -1
+cup_gold
+  rotate: false
+  xy: 385, 88
+  size: 76, 81
+  orig: 76, 81
+  offset: 0, 0
+  index: -1
+buttonright
+  rotate: false
+  xy: 130, 1
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+buttonleft
+  rotate: false
+  xy: 232, 1
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+cup_bronze
+  rotate: false
+  xy: 385, 5
+  size: 76, 81
+  orig: 76, 81
+  offset: 0, 0
+  index: -1
+coin_gold
+  rotate: false
+  xy: 463, 231
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
