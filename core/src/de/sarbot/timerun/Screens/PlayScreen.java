@@ -4,8 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import de.sarbot.timerun.Level;
+import de.sarbot.timerun.Parallax;
 import de.sarbot.timerun.Player;
 import de.sarbot.timerun.TimeRun;
 
@@ -17,7 +22,11 @@ public class PlayScreen implements Screen{
 
     private TimeRun game;
     private Level level;
-    private SpriteBatch defaultBatch;
+    private SpriteBatch hudBatch;
+    private Parallax parallaxBackground;
+    private Stage hudStage;
+    private Table hudTable;
+
 
     public PlayScreen(TimeRun gam){
         game = gam;
@@ -26,9 +35,24 @@ public class PlayScreen implements Screen{
     @Override
     public void show() {
 
+        hudStage = new Stage();
+        hudTable = new Table();
+        hudBatch = new SpriteBatch();
+
         int lvl = game.level;
         level = new Level(lvl); //create level, which creates the player
-        defaultBatch = new SpriteBatch();
+        hudBatch = new SpriteBatch();
+        Array<Texture> textures = new Array<Texture>();
+        for(int i = 1; i <=2;i++){
+            //textures.add(new Texture(Gdx.files.internal("parallax/img"+i+".png")));
+            textures.add(new Texture(Gdx.files.internal("background"+i+".png")));
+            textures.get(textures.size-1).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        }
+
+        parallaxBackground = new Parallax(textures);
+        parallaxBackground.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        parallaxBackground.setSpeed(1);
+        hudStage.addActor(parallaxBackground);
 
     }
 
@@ -46,7 +70,9 @@ public class PlayScreen implements Screen{
 
         Gdx.gl.glClearColor(1, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        level.render(defaultBatch);
+        hudStage.act(delta);
+        hudStage.draw();
+        level.render();
 
     }
 

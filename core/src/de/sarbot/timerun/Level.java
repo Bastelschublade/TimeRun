@@ -30,7 +30,6 @@ public class Level implements Disposable {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private Texture backgroundImg;
     private Array<Vector2> coinPositions;
     private int coinsCount;
     private float finishX;
@@ -58,7 +57,6 @@ public class Level implements Disposable {
         newPosition = new Vector2(0,0);
         tiles = new Array<Rectangle>();
         gravity =  40;
-        backgroundImg = new Texture(Gdx.files.internal("img/background.png"));
         coin = new Texture(Gdx.files.internal("img/coin.png"));
         map = new TmxMapLoader().load("level/level"+lvl+".tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f); //1/32 da 1tile = 32px
@@ -114,12 +112,7 @@ public class Level implements Disposable {
 
 
 
-    public void render(Batch batch){
-
-        //draw background (TODO: remove later)
-        batch.begin();
-        batch.draw(backgroundImg, 0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+    public void render(){
 
         //render tiledmap
         renderer.setView(camera);
@@ -264,6 +257,5 @@ public class Level implements Disposable {
     public void dispose() {
         map.dispose();
         player.dispose();
-        backgroundImg.dispose();
     }
 }
