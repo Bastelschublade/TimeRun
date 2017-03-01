@@ -12,6 +12,7 @@ import de.sarbot.timerun.TimeRun;
 /**
  * Created by sarbot on 28.02.17.
  */
+
 public class PlayScreen implements Screen{
 
     private TimeRun game;
@@ -85,5 +86,6 @@ public class PlayScreen implements Screen{
     @Override
     public void dispose() {
         game.dispose();
+        level.dispose();
     }
 }

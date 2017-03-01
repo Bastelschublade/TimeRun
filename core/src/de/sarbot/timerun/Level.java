@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
+import java.util.Iterator;
+
 /**
  * Created by sarbot on 28.02.17.
  */
@@ -41,6 +43,7 @@ public class Level implements Disposable {
     private Animation<TextureRegion> walk;
     private Animation<TextureRegion> jump;
     private Animation<TextureRegion> slide;
+    int score;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -50,6 +53,8 @@ public class Level implements Disposable {
     };
 
     public Level(int lvl){
+
+        score = 0;
         newPosition = new Vector2(0,0);
         tiles = new Array<Rectangle>();
         gravity =  40;
@@ -101,6 +106,7 @@ public class Level implements Disposable {
         newPosition.y = player.position.y + player.velocity.y * delta;
         collideBottom();
         collideRight();
+        collideCoins();
         player.position.x = newPosition.x;
         player.position.y = newPosition.y;
 
@@ -236,6 +242,19 @@ public class Level implements Disposable {
                 player.velocity.x = 0;
                 player.alive = false;
                 break;
+            }
+        }
+    }
+
+    private void collideCoins() {
+        Iterator<Vector2> i = coinPositions.iterator();
+        while (i.hasNext()) {
+            Vector2 pos = i.next();
+
+            if ((player.position.x < pos.x + 1) && (player.position.x + 1 > pos.x) && (player.position.y < pos.y + 1) && (player.position.y + 1 > pos.y)) {
+                i.remove(); //remove coin from position list
+                score++;
+
             }
         }
     }

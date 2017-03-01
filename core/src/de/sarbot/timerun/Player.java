@@ -58,7 +58,7 @@ public class Player implements Disposable{
         jump = new Animation(0, staticRegions[1]);
         slide = new Animation( 0, staticRegions[3]);
         dead = new Animation(0, staticRegions[2]);
-        walk = new Animation(0.08f, regions); //the hole vector
+        walk = new Animation(0.05f, regions); //the hole vector
         walk.setPlayMode(Animation.PlayMode.LOOP); //loop-pingpong if u have a more simple animation
 
         //if u want to get the player size from the image size to keep ratio do it here i did it manually in deklaration
