@@ -110,10 +110,10 @@ public class Player implements Disposable{
     }
 
     public void resetState(){
-        if(grounded && alive){
+        if(grounded && alive && state != State.Standing){
             state = State.Walking;
         }
-        else if (alive && !grounded){
+        else if (alive && !grounded && state != State.Standing){
             state = State.Jumping;
         }
     }

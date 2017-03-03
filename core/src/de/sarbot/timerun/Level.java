@@ -33,7 +33,7 @@ public class Level implements Disposable {
     private Array<Vector2> coinPositions;
     private int coinsCount;
     private float finishX;
-    private Texture coin;
+    public Texture coin;
     private float gravity;
     private Vector2 newPosition;
     private Array<Rectangle> tiles;
@@ -43,6 +43,7 @@ public class Level implements Disposable {
     private Animation<TextureRegion> jump;
     private Animation<TextureRegion> slide;
     int score;
+    public boolean won;
 
     private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
@@ -54,6 +55,7 @@ public class Level implements Disposable {
     public Level(int lvl){
 
         score = 0;
+        won = false;
         newPosition = new Vector2(0,0);
         tiles = new Array<Rectangle>();
         gravity =  40;
@@ -62,6 +64,7 @@ public class Level implements Disposable {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f); //1/32 da 1tile = 32px
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 20, 12);
+        camera.position.x = Gdx.graphics.getWidth()/64;
         camera.update();
         player = new Player();
 
@@ -72,7 +75,8 @@ public class Level implements Disposable {
 
     public void update(float delta){
         playerUpdate(delta);
-        camera.position.x = player.position.x;
+        if(player.alive && player.position.x*32 > Gdx.graphics.getWidth()/2)
+            camera.position.x = player.position.x; //todo: use boolean for this to use same for paralax and stop for dead
         camera.update(); //otherwise it moves out of the screen
 
     }
@@ -80,14 +84,18 @@ public class Level implements Disposable {
 
 
     public void playerUpdate(float delta){
-
         player.stateTime += delta;
-        if(!player.alive) {
+        if(!player.alive || won) {
             player.velocity.y -= gravity*delta;
             newPosition.y = player.position.y + player.velocity.y * delta;
             collideBottom();
             player.position.y = newPosition.y;
             return; // player will not be updated after he dies (exept the gravitation
+        }
+        if(player.position.x > finishX){
+            won = true;
+            player.state = Player.State.Standing;
+            return;
         }
 
 
@@ -191,6 +199,7 @@ public class Level implements Disposable {
     }
 
     private void collideBottom(){
+        player.grounded = false; //false if not groundet...
         int startX, startY, endX, endY;
         startX = (int) (player.position.x);
         endX = (int) (player.position.x + player.size.x);

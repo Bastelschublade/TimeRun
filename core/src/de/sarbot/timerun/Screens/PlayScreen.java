@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import de.sarbot.timerun.Level;
-import de.sarbot.timerun.Parallax;
-import de.sarbot.timerun.Player;
-import de.sarbot.timerun.TimeRun;
+import de.sarbot.timerun.*;
 
 /**
  * Created by sarbot on 28.02.17.
@@ -22,11 +19,13 @@ public class PlayScreen implements Screen{
 
     private TimeRun game;
     private Level level;
-    private SpriteBatch hudBatch;
-    private Parallax parallaxBackground;
+    private ParallaxLayer parallaxBackground;
     private Stage hudStage;
     private Table hudTable;
-
+    private Stage backStage;
+    private Parallax paraBackground;
+    private Texture bgImage;
+    private Interface hud;
 
     public PlayScreen(TimeRun gam){
         game = gam;
@@ -35,24 +34,18 @@ public class PlayScreen implements Screen{
     @Override
     public void show() {
 
+        backStage = new Stage();
         hudStage = new Stage();
         hudTable = new Table();
-        hudBatch = new SpriteBatch();
+        bgImage = new Texture("img/background.png");
 
         int lvl = game.level;
         level = new Level(lvl); //create level, which creates the player
-        hudBatch = new SpriteBatch();
-        Array<Texture> textures = new Array<Texture>();
-        for(int i = 1; i <=2;i++){
-            //textures.add(new Texture(Gdx.files.internal("parallax/img"+i+".png")));
-            textures.add(new Texture(Gdx.files.internal("background"+i+".png")));
-            textures.get(textures.size-1).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-        }
 
-        parallaxBackground = new Parallax(textures);
-        parallaxBackground.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        parallaxBackground.setSpeed(1);
-        hudStage.addActor(parallaxBackground);
+        paraBackground = new Parallax(bgImage);
+        hud = new Interface(level);
+        hudStage.addActor(hud);
+        backStage.addActor(paraBackground);
 
     }
 
@@ -70,9 +63,17 @@ public class PlayScreen implements Screen{
 
         Gdx.gl.glClearColor(1, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        paraBackground.setSpeed(0);
+        if(level.player.alive && level.player.position.x > Gdx.graphics.getWidth()/64 && !level.won){
+            paraBackground.setSpeed(1);
+        }
+        //hudStage.act(delta);
+        //hudStage.draw();
+        backStage.act(delta);
         hudStage.act(delta);
-        hudStage.draw();
+        backStage.draw();
         level.render();
+        hudStage.draw();
 
     }
 
@@ -113,5 +114,6 @@ public class PlayScreen implements Screen{
     public void dispose() {
         game.dispose();
         level.dispose();
+        bgImage.dispose();
     }
 }

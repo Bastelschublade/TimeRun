@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by sarbot on 27.02.17.
  */
-public class Parallax extends Actor {
+public class ParallaxLayer extends Actor {
 
     private int scroll;
-    private Texture layers;
+    private Array<Texture> layers;
     private final int LAYER_SPEED_DIFFERENCE = 2;
 
     float x,y,width,heigth,scaleX,scaleY;
@@ -21,10 +21,11 @@ public class Parallax extends Actor {
 
     private int speed;
 
-    public Parallax(Texture textures){
+    public ParallaxLayer(Array<Texture> textures){
         layers = textures;
-        layers.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-
+        for(int i = 0; i <textures.size;i++){
+            layers.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        }
         scroll = 0;
         speed = 0;
 
@@ -43,10 +44,10 @@ public class Parallax extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a * parentAlpha);
 
-
         scroll+=speed;
-        srcX = scroll;
-        batch.draw(layers, x, y, originX, originY, width, heigth,scaleX,scaleY,rotation,srcX,srcY,layers.getWidth(),layers.getHeight(),flipX,flipY);
-
+        for(int i = 0;i<layers.size;i++) {
+            srcX = scroll + i*this.LAYER_SPEED_DIFFERENCE *scroll;
+            batch.draw(layers.get(i), x, y, originX, originY, width, heigth,scaleX,scaleY,rotation,srcX,srcY,layers.get(i).getWidth(),layers.get(i).getHeight(),flipX,flipY);
+        }
     }
 }
