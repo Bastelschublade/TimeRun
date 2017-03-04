@@ -15,7 +15,7 @@ import javax.xml.soap.Text;
  */
 public class Player implements Disposable{
 
-    public static float JUMPSPEED = 16f;
+    public static float JUMPSPEED = 23f;
     public static float RUNSPEED = 10f;
     public static float SLIDEHEIGHT = 0.8f;
     public static float HEIGHT = 1.3f;

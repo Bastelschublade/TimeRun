@@ -31,7 +31,7 @@ public class Level implements Disposable {
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Array<Vector2> coinPositions;
-    private int coinsCount;
+    public int coinsCount;
     private float finishX;
     public Texture coin;
     private float gravity;
@@ -55,10 +55,11 @@ public class Level implements Disposable {
     public Level(int lvl){
 
         score = 0;
+        coinsCount = 0;
         won = false;
         newPosition = new Vector2(0,0);
         tiles = new Array<Rectangle>();
-        gravity =  40;
+        gravity =  70;
         coin = new Texture(Gdx.files.internal("img/coin.png"));
         map = new TmxMapLoader().load("level/level"+lvl+".tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f); //1/32 da 1tile = 32px
@@ -95,6 +96,10 @@ public class Level implements Disposable {
         if(player.position.x > finishX){
             won = true;
             player.state = Player.State.Standing;
+            return;
+        }
+        if(player.position.y < 0){
+            player.alive = false;
             return;
         }
 

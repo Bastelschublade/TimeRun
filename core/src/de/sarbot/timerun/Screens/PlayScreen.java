@@ -43,7 +43,7 @@ public class PlayScreen implements Screen{
         level = new Level(lvl); //create level, which creates the player
 
         paraBackground = new Parallax(bgImage);
-        hud = new Interface(level);
+        hud = new Interface(level, game);
         hudStage.addActor(hud);
         backStage.addActor(paraBackground);
 
@@ -76,6 +76,7 @@ public class PlayScreen implements Screen{
         hudStage.draw();
 
     }
+
 
     private boolean isTouched (float startX, float endX) {
         // Check for touch inputs between startX and endX
