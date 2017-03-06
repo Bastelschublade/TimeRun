@@ -68,6 +68,9 @@ public class Interface extends Actor implements Disposable{
         }
         if(level.won){
             int place = 2;
+            if(level.coinsCount == 0){
+                level.coinsCount = 999; //avoid zerodivision
+            }
             if (level.score/level.coinsCount == 1) place = 0;
             else if(level.score/level.coinsCount > 0.75) place = 1;
             font.draw(batch, "Level Done", 800/2 -70, popupY + 160);
