@@ -53,25 +53,25 @@ public class Interface extends Actor implements Disposable{
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        batch.draw(level.coin, 20, Gdx.graphics.getHeight()-60, (float) (level.coin.getWidth()), (float)(level.coin.getHeight()));
-        font.draw(batch, level.score+ "", 50, Gdx.graphics.getHeight()-30);
+        batch.draw(level.coin, 15, 420, (float) (level.coin.getWidth()), (float)(level.coin.getHeight()));
+        font.draw(batch, level.score+ "", 50, 480-30);
 
         //draw popup:
         if(level.won || !level.player.alive){
             timer += deltaTime; //increase timer 1/sec
             movePopup();
             //moveButtons();
-            batch.draw(btn, Gdx.graphics.getWidth()/2-btn.getWidth()/2, buttonY);
-            batch.draw(popupImg, Gdx.graphics.getWidth()/2-popupImg.getWidth()/2, popupY);
-            batch.draw(level.coin, Gdx.graphics.getWidth()/2-70, popupY + 70);
-            font.draw(batch, level.score +" / " + level.coinsCount, Gdx.graphics.getWidth()/2 -30, popupY + 100);
+            batch.draw(btn, 400-btn.getWidth()/2, buttonY);
+            batch.draw(popupImg, 400-popupImg.getWidth()/2, popupY);
+            batch.draw(level.coin, 400-70, popupY + 70);
+            font.draw(batch, level.score +" / " + level.coinsCount, 800/2 -30, popupY + 100);
         }
         if(level.won){
             int place = 2;
             if (level.score/level.coinsCount == 1) place = 0;
             else if(level.score/level.coinsCount > 0.75) place = 1;
-            font.draw(batch, "Level Done", Gdx.graphics.getWidth()/2 -70, popupY + 160);
-            batch.draw(cups[place], Gdx.graphics.getWidth()/2 + 100, popupY + 20, 61, 60);
+            font.draw(batch, "Level Done", 800/2 -70, popupY + 160);
+            batch.draw(cups[place], 800/2 + 100, popupY + 20, 61, 60);
             if(timer > 3){
                 game.level++;
                 game.setScreen(new PlayScreen(game));
@@ -79,7 +79,7 @@ public class Interface extends Actor implements Disposable{
 
         }
         else if(!level.player.alive){
-            font.draw(batch, "Game Over", Gdx.graphics.getWidth()/2 -70, popupY + 160);
+            font.draw(batch, "Game Over", 800/2 -70, popupY + 160);
             if(timer >3){
                 game.setScreen(new PlayScreen(game));
             }

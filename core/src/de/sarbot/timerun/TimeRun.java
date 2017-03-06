@@ -4,8 +4,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import de.sarbot.timerun.Screens.MenuScreen;
 
 public class TimeRun extends Game {
@@ -15,9 +18,19 @@ public class TimeRun extends Game {
 
     // variables for the game object
     public int level;
+    public FillViewport viewport;
+    private OrthographicCamera camera;
+
 
 	@Override
 	public void create () {
+
+        //generate camera and viewport for on screen positioning like hud and menus
+        camera = new OrthographicCamera();
+        viewport = new FillViewport(800,480, camera);
+        viewport.apply();
+        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        camera.update();
 
 	    level = 0;
 	    //get levelcount here ?

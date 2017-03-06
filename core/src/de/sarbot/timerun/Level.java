@@ -65,7 +65,7 @@ public class Level implements Disposable {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f); //1/32 da 1tile = 32px
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 20, 12);
-        camera.position.x = Gdx.graphics.getWidth()/64;
+        camera.position.x = 400/32;
         camera.update();
         player = new Player();
 
@@ -76,7 +76,7 @@ public class Level implements Disposable {
 
     public void update(float delta){
         playerUpdate(delta);
-        if(player.alive && player.position.x*32 > Gdx.graphics.getWidth()/2)
+        if(player.alive && player.position.x*32 > 400)
             camera.position.x = player.position.x; //todo: use boolean for this to use same for paralax and stop for dead
         camera.update(); //otherwise it moves out of the screen
 

@@ -45,6 +45,7 @@ public class PlayScreen implements Screen{
         paraBackground = new Parallax(bgImage);
         hud = new Interface(level, game);
         hudStage.addActor(hud);
+        hudStage.setViewport(game.viewport);
         backStage.addActor(paraBackground);
 
     }
