@@ -21,7 +21,9 @@ public class Parallax extends Actor {
 
     private int speed;
 
-    public Parallax(Texture textures){
+    public Parallax(Texture textures, int w, int h){
+        width = w;
+        heigth = h;
         layers = textures;
         layers.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
 
@@ -29,8 +31,8 @@ public class Parallax extends Actor {
         speed = 0;
 
         x = y = originX = originY = rotation = srcY = 0;
-        width =  Gdx.graphics.getWidth();
-        heigth = Gdx.graphics.getHeight();
+        width =  800;
+        heigth = 480;
         scaleX = scaleY = 1;
         flipX = flipY = false;
     }

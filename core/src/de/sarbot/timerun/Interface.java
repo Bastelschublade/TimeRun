@@ -29,9 +29,11 @@ public class Interface extends Actor implements Disposable{
     private Texture cupsImg;
     private TextureRegion[] cups;
     private TimeRun game;
+    public boolean inputready;
 
 
     public Interface (Level lvl, TimeRun gam){
+        inputready = false;
         game = gam;
         level = lvl;
         font = new BitmapFont(Gdx.files.internal("mabitmap.fnt"));
@@ -65,6 +67,9 @@ public class Interface extends Actor implements Disposable{
             batch.draw(popupImg, 400-popupImg.getWidth()/2, popupY);
             batch.draw(level.coin, 400-70, popupY + 70);
             font.draw(batch, level.score +" / " + level.coinsCount, 800/2 -30, popupY + 100);
+            if(timer>1){
+                inputready = true;
+            }
         }
         if(level.won){
             int place = 2;

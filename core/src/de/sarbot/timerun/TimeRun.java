@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import de.sarbot.timerun.Screens.MenuScreen;
@@ -19,6 +20,8 @@ public class TimeRun extends Game {
     // variables for the game object
     public int level;
     public FillViewport viewport;
+    public int width;
+    public int height;
     private OrthographicCamera camera;
 
 
@@ -26,6 +29,8 @@ public class TimeRun extends Game {
 	public void create () {
 
         //generate camera and viewport for on screen positioning like hud and menus
+		width = 800;
+		height = 480;
         camera = new OrthographicCamera();
         viewport = new FillViewport(800,480, camera);
         viewport.apply();

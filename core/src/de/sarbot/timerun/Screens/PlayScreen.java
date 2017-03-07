@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import de.sarbot.timerun.*;
 
 /**
@@ -26,6 +28,8 @@ public class PlayScreen implements Screen{
     private Parallax paraBackground;
     private Texture bgImage;
     private Interface hud;
+    private OrthographicCamera myCam;
+    private StretchViewport myViewport;
 
     public PlayScreen(TimeRun gam){
         game = gam;
@@ -34,7 +38,9 @@ public class PlayScreen implements Screen{
     @Override
     public void show() {
 
-        backStage = new Stage();
+        myCam = new OrthographicCamera(game.width, game.height);
+        myViewport = new StretchViewport(game.width,game.height, myCam);
+        backStage = new Stage(myViewport);
         hudStage = new Stage();
         hudTable = new Table();
         bgImage = new Texture("img/background.png");
@@ -42,7 +48,7 @@ public class PlayScreen implements Screen{
         int lvl = game.level;
         level = new Level(lvl); //create level, which creates the player
 
-        paraBackground = new Parallax(bgImage);
+        paraBackground = new Parallax(bgImage, game.width, game.height);
         hud = new Interface(level, game);
         hudStage.addActor(hud);
         hudStage.setViewport(game.viewport);
@@ -52,7 +58,9 @@ public class PlayScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.UP) || isTouched(0.5f, 1) ) {
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) ||
+                Gdx.input.isKeyPressed(Input.Keys.UP) ||
+                isTouched(0.5f, 1) ) {
             level.player.jump();
         }
         level.player.resetState();
