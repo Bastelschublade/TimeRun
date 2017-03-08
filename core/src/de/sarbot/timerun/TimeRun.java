@@ -19,6 +19,7 @@ public class TimeRun extends Game {
 
     // variables for the game object
     public int level;
+    public int maxLevel;
     public FillViewport viewport;
     public int width;
     public int height;
@@ -38,6 +39,7 @@ public class TimeRun extends Game {
         camera.update();
 
 	    level = 0;
+	    maxLevel = 3;
 	    //get levelcount here ?
 	    setScreen(new MenuScreen(this));
 	}

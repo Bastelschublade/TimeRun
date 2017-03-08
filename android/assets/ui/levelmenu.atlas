@@ -1,0 +1,54 @@
+
+levelmenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bridge
+  rotate: false
+  xy: 1, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxWarning
+  rotate: false
+  xy: 73, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 145, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxAlt
+  rotate: false
+  xy: 217, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+default
+  rotate: false
+  xy: 217, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxEmpty
+  rotate: false
+  xy: 289, 33
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+cup
+  rotate: false
+  xy: 1, 1
+  size: 28, 30
+  orig: 28, 30
+  offset: 0, 0
+  index: -1
