@@ -111,6 +111,7 @@ public class Player implements Disposable{
 
     public void resetState(){
         if(grounded && alive && state != State.Standing){
+            // TODO: check for collision up (dont stand up if tile above)
             state = State.Walking;
         }
         else if (alive && !grounded && state != State.Standing){

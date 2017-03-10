@@ -81,7 +81,10 @@ public class Interface extends Actor implements Disposable{
             font.draw(batch, "Level Done", 800/2 -70, popupY + 160);
             batch.draw(cups[place], 800/2 + 100, popupY + 20, 61, 60);
             if(timer > 3){
-                game.level++;
+                game.data.solves[game.data.lvl] = 3-place;
+                game.data.lvl++; //TODO: only use game.data.lvl not level anymore
+                //game.level++;
+                game.saveData();
                 game.setScreen(new PlayScreen(game));
             }
 

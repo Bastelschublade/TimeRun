@@ -53,6 +53,7 @@ public class LevelScreen implements Screen{
         */
         skin = new Skin(atlas);
         skin.add("top", skin.newDrawable("boxEmpty"), Drawable.class);
+        skin.add( "locked", skin.newDrawable("boxAlt"), Drawable.class);
         skin.add("star-filled", skin.newDrawable("star"), Drawable.class);
         skin.add("star-unfilled", skin.newDrawable("star", Color.GRAY), Drawable.class);
 
@@ -72,12 +73,11 @@ public class LevelScreen implements Screen{
         int lvlperpage = 12;
         int pages = (int) Math.floor(game.maxLevel/lvlperpage); //calc number of pages
         for (int l = 0; l <= pages; l++) {
-            Table levels = new Table().pad(50);
-            levels.defaults().pad(20, 40, 20, 40);
+            Table levels = new Table().pad(20, 80, 20, 80);
+            levels.defaults().pad(10, 30, 10, 30);
             for (int y = 0; y < 3; y++) {
                 levels.row();
                 for (int x = 0; x < 4; x++) {
-                    System.out.print(game.maxLevel + " and c: " + c + "\n");
                     if(c <= game.maxLevel){
                         //(c++) fkt wird für c ausgef und dann ++ genommen
                         levels.add(getLevelButton(c++)).expand().fill();
@@ -158,28 +158,36 @@ public class LevelScreen implements Screen{
         label.setAlignment(Align.center);
 
         // Stack the image and the label at the top of our button
-        button.stack(new Image(skin.getDrawable("top")), label).expand().fill();
-
+        if( level <= game.unlockLevel) {
+            button.stack(new Image(skin.getDrawable("top")), label).width(100).height(100);
+        }
+        else{
+            label.setText("");
+            button.stack(new Image(skin.getDrawable("locked")), label).width(100).height(100);
+        }
         // Randomize the number of stars earned for demonstration purposes
-        int stars = MathUtils.random(-1, +3);
+        int stars = game.data.solves[level];
         Table starTable = new Table();
         starTable.defaults().pad(0);
-        if (stars >= 0) {
+        if (stars >= 0 && level <= game.unlockLevel) {
             for (int star = 0; star < 3; star++) {
                 if (stars > star) {
                     starTable.add(new Image(skin.getDrawable("star-filled"))).width(40).height(40);
                 } else {
-                    starTable.add(new Image(skin.getDrawable("star-unfilled"))).width(40).height(40);
+                    starTable.add(new Image(skin.getDrawable("star-unfilled"))).width(30).height(30);
                 }
             }
         }
 
         button.row();
-        button.add(starTable).height(40);
+        button.add(starTable).height(30);
+
 
         button.setName("Level " + Integer.toString(level));
         button.setOriginX(level);
-        button.addListener(levelClickListener);
+        if(level <= game.unlockLevel) {
+            button.addListener(levelClickListener);
+        }
         return button;
     }
 
@@ -191,9 +199,10 @@ public class LevelScreen implements Screen{
         public void clicked (InputEvent event, float x, float y) {
             System.out.println("Click: " + event.getListenerActor().getName());
             if(event.getListenerActor().getOriginX() <= game.maxLevel){
-                game.level = (int) event.getListenerActor().getOriginX();
+                game.data.lvl = (int) event.getListenerActor().getOriginX(); //todo find better place than originx
                 game.setScreen(new PlayScreen(game));
             }
         }
     };
+
 }

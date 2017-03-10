@@ -45,7 +45,8 @@ public class PlayScreen implements Screen{
         hudTable = new Table();
         bgImage = new Texture("img/background.png");
 
-        int lvl = game.level;
+        int lvl = game.data.lvl;
+        if(!Gdx.files.internal("level/level"+lvl+".tmx").exists()) {game.setScreen(new CreditsScreen(game));}
         level = new Level(lvl); //create level, which creates the player
 
         paraBackground = new Parallax(bgImage, game.width, game.height);
